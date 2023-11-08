@@ -18,10 +18,16 @@ class ScreenA extends StatefulWidget {
 
 class _State extends State<ScreenA> {
   List<Product>? listProducts;
-
   ProductApi productApi = ProductApi();
+
   Future<void> parseAPIResponse() async {
-    final list = await productApi.getAll();
+    const params = {
+      "page": 1,
+      "limit": 10,
+      "company": 60,
+    };
+
+    final list = await productApi.getAll(params);
     setState(() {
       listProducts = list;
     });
@@ -40,12 +46,14 @@ class _State extends State<ScreenA> {
         title: const Text('Screen A'),
       ),
       backgroundColor: Colors.white,
-      body: Column(
-        children: (listProducts ?? []).map((e) {
-          return Container(
-            child: ProductCardContainer(item: e),
-          );
-        }).toList(),
+      body: SingleChildScrollView(
+        child: Column(
+          children: (listProducts ?? []).map((e) {
+            return Container(
+              child: ProductCardContainer(item: e),
+            );
+          }).toList(),
+        ),
       )
     );
   }

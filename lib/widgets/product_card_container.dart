@@ -18,35 +18,41 @@ class ProductCardContainer extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Container(
+          SizedBox(
             width: 56,
             height: 56,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(100),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: item.mediaData.isEmpty ? Image.asset('') : Image.network(item.mediaData[0].image, fit: BoxFit.cover)
             ),
-            child: item.mediaData.isEmpty ? Image.asset('') : Image.network(item.mediaData[0].image, fit: BoxFit.cover)
           ),
 
-          Container(
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            child: Expanded(
-              child: Column(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 8),
-                    child: Text(
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              width: MediaQuery.of(context).size.width,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
                       item.title,
                       overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
                     ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(item.code),
-                      Text(item.priceSell.toString())
-                    ],
-                  )
-                ],
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(item.code),
+                        Text(item.priceSell.toString())
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
           )
